@@ -128,7 +128,8 @@ class ChoroplethMap {
           console.log('Mouse over event:', event);
           console.log('Mouse over data:', d);
           if (d && d.properties && d.properties[vis.selectedVariable]) {
-              if(d.properties[vis.selectedVariable] == d.properties.urbanRuralStatus){
+              if(vis.selectedVariable == "urbanRuralStatus"){
+                console.log('Im finna pass rn', vis.selectedVariable);
                 d.properties[vis.selectedVariable] = d.properties.urbanRuralStatusString;
               }
             
