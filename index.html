@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>D3 Choropleth Map</title>
+    <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>US Counties</h1>
+
+    <!-- Dropdown menu for selecting variable -->
+    <div class="dropdown" id="dropdown1">
+        <select id="variable-dropdown-1">
+            <option value="povertyPercentage">Poverty Percentage</option>
+            <option value="medianHouseholdIncome">Median Household Income</option>
+            <option value="educationLessThanHighSchoolPercent">Education Less Than High School Percent</option>
+            <option value="airQuality">Air Quality</option>
+            <option value="parkAccess">Park Access</option>
+            <option value="percentInactive">Percent Inactive</option>
+            <option value="percentSmoking">Percent Smoking</option>
+            <option value="urbanRuralStatus">Urban/Rural Status</option>
+            <option value="elderlyPercentage">Elderly Percentage</option>
+            <option value="numberOfHospitals">Number of Hospitals</option>
+            <option value="numberOfPrimaryCarePhysicians">Number of Primary Care Physicians</option>
+            <option value="percentNoHealthInsurance">Percent No Health Insurance</option>
+            <option value="percentHighBloodPressure">Percent High Blood Pressure</option>
+            <option value="percentCoronaryHeartDisease">Percent Coronary Heart Disease</option>
+            <option value="percentStroke">Percent Stroke</option>
+            <option value="percentHighCholesterol">Percent High Cholesterol</option>
+        </select>
+    </div>
+
+    <div class="viz" id="map1"></div>
+
+    <div class="dropdown" id="dropdown2">
+        <select id="variable-dropdown-2">
+            <option value="povertyPercentage">Poverty Percentage</option>
+            <option value="medianHouseholdIncome">Median Household Income</option>
+            <option value="educationLessThanHighSchoolPercent">Education Less Than High School Percent</option>
+            <option value="airQuality">Air Quality</option>
+            <option value="parkAccess">Park Access</option>
+            <option value="percentInactive">Percent Inactive</option>
+            <option value="percentSmoking">Percent Smoking</option>
+            <option value="urbanRuralStatus">Urban/Rural Status</option>
+            <option value="elderlyPercentage">Elderly Percentage</option>
+            <option value="numberOfHospitals">Number of Hospitals</option>
+            <option value="numberOfPrimaryCarePhysicians">Number of Primary Care Physicians</option>
+            <option value="percentNoHealthInsurance">Percent No Health Insurance</option>
+            <option value="percentHighBloodPressure">Percent High Blood Pressure</option>
+            <option value="percentCoronaryHeartDisease">Percent Coronary Heart Disease</option>
+            <option value="percentStroke">Percent Stroke</option>
+            <option value="percentHighCholesterol">Percent High Cholesterol</option>
+        </select>
+    </div>
+
+    <div class="viz" id="map2"></div>
+
+    <svg height="5" width="5" xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <pattern id="lightstripe" patternUnits="userSpaceOnUse" width="5" height="5"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc1JyBoZWlnaHQ9JzUnPgogIDxyZWN0IHdpZHRoPSc1JyBoZWlnaHQ9JzUnIGZpbGw9J3doaXRlJy8+CiAgPHBhdGggZD0nTTAgNUw1IDBaTTYgNEw0IDZaTS0xIDFMMSAtMVonIHN0cm9rZT0nIzg4OCcgc3Ryb2tlLXdpZHRoPScxJy8+Cjwvc3ZnPg==" x="0" y="0" width="5" height="5"> </image> </pattern> </defs></svg>
+
+    <div id="tooltip"></div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+    <script src="js/topojson.v3.js"></script>
+
+    <!-- Include your JavaScript files -->
+    <!-- <script src="js/d3.v6.min.js"></script> -->
+    <!-- <script src="js/topojson.v3.js"></script> -->
+    <script src="js/choroplethMap.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
