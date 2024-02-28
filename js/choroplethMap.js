@@ -7,13 +7,13 @@ class ChoroplethMap {
       containerHeight: _config.containerHeight || 500,
       margin: _config.margin || {top: 10, right: 10, bottom: 10, left: 10},
       tooltipPadding: 10,
-      legendBottom: 200,
-      legendLeft: 825,
+      legendBottom: 473,
+      legendLeft: 450,
       legendRectHeight: 12, 
       legendRectWidth: 150
     };
     this.data = _data;
-    this.selectedVariable = 'poverty_perc'; // Default selected variable
+    this.selectedVariable = 'defaultValue'; // Default selected variable
 
     this.initVis();
   }
@@ -129,7 +129,6 @@ class ChoroplethMap {
           console.log('Mouse over data:', d);
           if (d && d.properties && d.properties[vis.selectedVariable]) {
               if(vis.selectedVariable == "urbanRuralStatus"){
-                console.log('Im finna pass rn', vis.selectedVariable);
                 d.properties[vis.selectedVariable] = d.properties.urbanRuralStatusString;
               }
             
@@ -173,12 +172,95 @@ class ChoroplethMap {
   }
 
   updateLegend() {
-    // Implement legend update if needed
-  }
+    let vis = this;
+  
+    // Remove existing legend elements
+    vis.legend.selectAll('.legend-title').remove();
+  
+    // Define begin and end of the color gradient (legend)
+    const dataValuesExtent = vis.colorScale.domain();
+    const legendScale = d3.scaleLinear()
+      .domain(dataValuesExtent)
+      .range([0, vis.config.legendRectWidth]);
+  
+    vis.legendAxis = d3.axisBottom(legendScale)
+      .ticks(5)
+      .tickFormat(d3.format(".2s"));
+  
+    vis.legendAxisGroup.call(vis.legendAxis);
+  
+    vis.linearGradient.selectAll('stop')
+      .data([
+        { color: '#cfe2f2', offset: '0%'},
+        { color: '#0d306b', offset: '100%'}
+      ])
+      .enter().append('stop')
+      .merge(vis.linearGradient.selectAll('stop')) // merge existing and new data
+      .attr('offset', d => d.offset)
+      .attr('stop-color', d => d.color);
+  
+    // Extracting units from the variable
+    const variableName = vis.selectedVariable.replace(/([A-Z])/g, ' $1').trim(); // Add spaces before capital letters
+    let units = ''; // Variable for units
+    if (variableName === 'Poverty Percentage') {
+      variableName = 'Poverty Percent'; // Ensure the variable name is correct
+      units = '%'; // Add percent sign for 'Poverty Percent'
+    } else if (variableName === 'Median Household Income') {
+      units = 'USD'; // Add 'USD' for 'Median Household Income'
+    }
+    const titleText = variableName + (units ? ' (' + units + ')' : ''); // Construct title text with units if applicable
+    // Append legend title
+    vis.legend.append('text')
+      .attr('class', 'legend-title')
+      .attr('dy', '.35em')
+      .attr('y', -10)
+      .attr('text-anchor', 'middle')
+      .attr('x', vis.config.legendRectWidth / 2)
+      .style('text-transform', 'capitalize') // Capitalize the first letter of each word
+      .text(titleText); // Add spaces before capital letters
+  }  
 
   initLegend() {
-    // Implement legend initialization if needed
+    let vis = this;
+  
+    // Append gradient to the legend
+    vis.linearGradient.selectAll('*').remove(); // Remove existing stops (if any)
+    vis.legendRect.attr('fill', 'url(#legend-gradient)');
+  
+    // Define begin and end of the color gradient (legend)
+    const dataValuesExtent = vis.colorScale.domain();
+    const legendScale = d3.scaleLinear()
+      .domain(dataValuesExtent)
+      .range([0, vis.config.legendRectWidth]);
+  
+    vis.legendAxis = d3.axisBottom(legendScale)
+      .ticks(5)
+      .tickFormat(d3.format(".2s"));
+  
+    vis.legendAxisGroup = vis.legend.append('g')
+      .attr('class', 'axis')
+      .attr('transform', `translate(0, ${vis.config.legendRectHeight})`)
+      .call(vis.legendAxis);
+  
+    vis.legendStops = [
+      { color: '#cfe2f2', value: dataValuesExtent[0], offset: 0},
+      { color: '#0d306b', value: dataValuesExtent[1], offset: 100},
+    ];
+  
+    vis.linearGradient.selectAll('stop')
+      .data(vis.legendStops)
+      .enter().append('stop')
+      .attr('offset', d => d.offset + '%')
+      .attr('stop-color', d => d.color);
+  
+    // Append legend title
+    vis.legend.append('text')
+      .attr('class', 'legend-title')
+      .attr('dy', '.35em')
+      .attr('y', -10)
+      .text(vis.selectedVariable.replace(/([A-Z])/g, ' $1')); // Add spaces before capital letters
   }
+  
 
   clicked() {
     // Implement click event handling if needed

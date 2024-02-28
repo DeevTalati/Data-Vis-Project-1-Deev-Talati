@@ -1,3 +1,4 @@
+import { Histogram } from './histogram.js';
 Promise.all([
   d3.json('data/counties-10m.json'),
   d3.csv('data/national_health_data.csv') // Updated CSV file name
@@ -55,6 +56,7 @@ Promise.all([
       }
     }
   });
+
   console.log('Merged Geo Data:', geoData);
   const choroplethMap = new ChoroplethMap({ 
     parentElement: '#map1',   
@@ -64,6 +66,19 @@ Promise.all([
     parentElement: '#map2',   
   }, geoData);
 
+  // Extract the data values from the geoData object
+  // const dataValues = geoData.objects.counties.geometries.map(d => {
+  //   return d.properties.povertyPercentage; // Change this to the desired property
+  // });
+
+  // console.log('Data passed to Histogram:', dataValues);
+  // Update the part where the histogram is initialized
+  const histogram = new Histogram({
+    parentElement: '#histogram-container',
+    containerWidth: 400,
+    containerHeight: 250,
+    margin: { top: 20, right: 20, bottom: 30, left: 40 }
+  }, geoData); // Pass nationalHealthData instead of dataValues
 
   // Assume you have a dropdown menu with id "variable-dropdown"
   const dropdown1 = document.getElementById('dropdown1');
@@ -86,6 +101,17 @@ Promise.all([
     console.log('Selected variable:', selectedVariable2);
     // Call updateData with the new variable name and associated data
     choroplethMap2.updateData(selectedVariable2, geoData);
+  });
+  
+  const dropdown3 = document.getElementById('dropdown3');
+
+   // Add event listener to the dropdown
+   dropdown3.addEventListener('change', function(event) {
+    // Get the selected variable name from the dropdown
+    const selectedAttribute3 = event.target.value;
+    console.log('Selected attribute:', selectedAttribute3);
+    // Call updateVis with the selected attribute
+    histogram.updateData(selectedAttribute3, geoData);
   });
 })
 .catch(error => console.error(error));
