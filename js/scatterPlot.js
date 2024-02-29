@@ -49,7 +49,7 @@ class ScatterPlot {
             .attr("text-anchor", "middle")
             .attr("x", vis.width / 2)
             .attr("y", vis.height + 50)
-            .text("X Axis");
+            .text("Select X Attribute");
     
         // Append y-axis label
         vis.svg.append("text")
@@ -58,7 +58,7 @@ class ScatterPlot {
             .attr("x", -vis.height / 2)
             .attr("y", -60)
             .attr("transform", "rotate(-90)")
-            .text("Y Axis");
+            .text("Select Y Attribute");
     
         // Append clipping path
         vis.svg.append("clipPath")
