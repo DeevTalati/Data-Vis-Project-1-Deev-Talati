@@ -68,7 +68,6 @@ class ChoroplethMap {
         .attr('class', 'legend-title')
         .attr('dy', '.35em')
         .attr('y', -10)
-        .text('Legend Title');
 
     // Render the visualization
     vis.renderVis();
@@ -82,11 +81,17 @@ class ChoroplethMap {
     const counties = topojson.feature(vis.data, vis.data.objects.counties);
     console.log('vis data:', vis.data);
     // Filter out undefined values before computing the extent
-    const dataValues = counties.features.map(d => d.properties[vis.selectedVariable]).filter(d => !isNaN(d));
+    //const dataValues = counties.features.map(d => d.properties[vis.selectedVariable]).filter(d => !isNaN(d));
 
-    console.log('Data values for selected column:', dataValues);
+    // Extract the relevant property from the geoData
+    const dataValues = counties.features.map(d => {
+      return d.properties[vis.selectedVariable];
+    });
+
+    const validData = dataValues.filter(d => typeof d === 'number' && !isNaN(d) && d >= 0);
+    console.log('Data values for selected column:', validData);
   
-    vis.colorScale.domain(d3.extent(dataValues));
+    vis.colorScale.domain(d3.extent(validData));
   
     console.log('Color scale domain:', vis.colorScale.domain());
   
@@ -99,7 +104,7 @@ class ChoroplethMap {
           return 'url(#lightstripe)';
         }
       });
-    const dataValuesExtent = d3.extent(dataValues);
+    const dataValuesExtent = d3.extent(validData);
     // Define begin and end of the color gradient (legend)
     vis.legendStops = [
       { color: '#cfe2f2', value: dataValuesExtent[0], offset: 0},
@@ -252,13 +257,22 @@ class ChoroplethMap {
       .enter().append('stop')
       .attr('offset', d => d.offset + '%')
       .attr('stop-color', d => d.color);
-  
+    
+      // Function to capitalize the first letter of each word
+    function capitalizeFirstLetter(string) {
+      return string.replace(/\b\w/g, function (char) {
+          return char.toUpperCase();
+      });
+    }
+
     // Append legend title
     vis.legend.append('text')
       .attr('class', 'legend-title')
       .attr('dy', '.35em')
       .attr('y', -10)
-      .text(vis.selectedVariable.replace(/([A-Z])/g, ' $1')); // Add spaces before capital letters
+      .attr('text-anchor', 'middle')
+      .attr('x', vis.config.legendRectWidth / 2)
+      .text(capitalizeFirstLetter(vis.selectedVariable.replace(/([A-Z])/g, ' $1').trim())); // Add spaces before capital letters
   }
   
 

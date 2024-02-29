@@ -1,6 +1,6 @@
 .background {
-            fill: none;
-            pointer-events: all;
+    fill: none;
+    pointer-events: all;
 }
 
 #states {
@@ -31,19 +31,74 @@
 }
 
 #tooltip {
-  position: absolute;
-  display: none;
-  background: #fff;
-  box-shadow: 3px 3px 3px 0px rgb(92 92 92 / 0.5);
-  border: 1px solid #ddd;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 8px;
-  min-width: 160px;
-  color: #333;
+    position: absolute;
+    display: none;
+    background: #fff;
+    box-shadow: 3px 3px 3px 0px rgb(92 92 92 / 0.5);
+    border: 1px solid #ddd;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px;
+    min-width: 160px;
+    color: #333;
 }
+
 .tooltip-title {
-  color: #000;
-  font-size: 14px;
-  font-weight: 600;
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
 }
+
+/* Styles for the legend */
+.legend {
+    /* Change absolute positioning to relative positioning */
+    position: relative;
+    /* Set width to make it smaller */
+    width: 150px; /* Adjust as needed */
+    max-height: auto; /* Adjust as needed */
+    overflow-y: auto;
+    /* Prevent horizontal scrolling */
+    overflow-x: hidden;
+    /* Adjust margin values to position the legend */
+    margin-top: 20px; /* Adjust as needed */
+    margin-left: 10px; /* Adjust as needed */
+    /* Remove float: right */
+    /* float: right; */
+    /* Adjust the right padding to create space between the legend and scatter plot */
+    padding-right: 10px; /* Adjust as needed */
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    /* Remove border-radius for better fit */
+    /* border-radius: 5px; */
+}
+
+.viz-container {
+    /* Add display flex to align items horizontally */
+    display: flex;
+    /* Add padding to the right of the scatter plot */
+    padding-right: 200px; /* Adjust as needed */
+    /* Ensure proper positioning of the legend */
+    position: relative;
+}
+
+.viz {
+    /* Remove padding-right to avoid extra space */
+    padding-right: 0;
+}
+
+.legend-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.legend-item {
+    margin-bottom: 5px;
+}
+
+.legend-item div {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Add any additional styles as needed */

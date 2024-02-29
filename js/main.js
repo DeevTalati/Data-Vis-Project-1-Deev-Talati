@@ -1,4 +1,5 @@
 import { Histogram } from './histogram.js';
+import { ScatterPlot } from './scatterPlot.js';
 Promise.all([
   d3.json('data/counties-10m.json'),
   d3.csv('data/national_health_data.csv') // Updated CSV file name
@@ -77,8 +78,16 @@ Promise.all([
     parentElement: '#histogram-container',
     containerWidth: 400,
     containerHeight: 250,
-    margin: { top: 20, right: 20, bottom: 30, left: 40 }
+    margin: { top: 20, right: 20, bottom: 60, left: 70 }
   }, geoData); // Pass nationalHealthData instead of dataValues
+
+   // Instantiate the scatter plot visualization
+   const scatterPlot = new ScatterPlot({
+    parentElement: '#scatterplot-container',
+    width: 800,
+    height: 500,
+    margin: { top: 20, right: 20, bottom: 60, left: 100 }
+  }, geoData); // Pass geoData as the initial dataset
 
   // Assume you have a dropdown menu with id "variable-dropdown"
   const dropdown1 = document.getElementById('dropdown1');
@@ -112,6 +121,20 @@ Promise.all([
     console.log('Selected attribute:', selectedAttribute3);
     // Call updateVis with the selected attribute
     histogram.updateData(selectedAttribute3, geoData);
+  });
+
+  // Event listener for x-axis attribute change
+  const xAttributeDropdown = document.getElementById('x-attribute-dropdown');
+  xAttributeDropdown.addEventListener('change', function(event) {
+    const selectedXAttribute = event.target.value;
+    scatterPlot.updateData(selectedXAttribute, scatterPlot.yAttribute, geoData);
+  });
+
+  // Event listener for y-axis attribute change
+  const yAttributeDropdown = document.getElementById('y-attribute-dropdown');
+  yAttributeDropdown.addEventListener('change', function(event) {
+    const selectedYAttribute = event.target.value;
+    scatterPlot.updateData(scatterPlot.xAttribute, selectedYAttribute, geoData);
   });
 })
 .catch(error => console.error(error));
