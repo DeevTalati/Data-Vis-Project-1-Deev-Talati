@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>D3 Choropleth Map</title>
+    <title>D3 Project 1</title>
     <link rel="icon" href="data:;base64,iVBORwOKGO=" />
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <h1>US Counties</h1>
+     <!-- Information Button -->
+     <div class="info-button" onclick="openModal()">
+        <i class="fa fa-info"></i> <!-- Adjust the class based on your icon library -->
+    </div>
+
+    <!-- Modal Content -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <!-- Close button -->
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>How To Use This Application</h2>
+            <p>
+                In this application, there are three different types of maps: Choropleths, Histograms, and a Scatter Plot. To use the Choropleth and Histogram, simply select the desired attribute you would like to view in the dedicated drop-down menu. For the Scatter Plot, you will need to select an attribute for both the X and Y axis. Once this is done, you will see the data populate.
+                <br><br>
+                Additionally, you can interact with the Scatter Plot by brushing the data to zoom into any desired section. Simply left-click and drag your mouse to the data you would like to zoom in to. To delete the selection box, just left-click your mouse.
+            </p>
+        </div>
+    </div>
+
+    <h1>Project 1: US Counties VS Various Attributes</h1>
 
     <!-- Dropdown menu for selecting variable -->
     <div class="dropdown" id="dropdown1">
+        <label for="variable-dropdown-1">Choropleth Map Attribute 1:</label>
         <select id="variable-dropdown-1">
             <option value="defaultValue">Select an Attribute</option>
             <option value="povertyPercentage">Poverty Percentage</option>
@@ -34,6 +55,7 @@
     <div class="viz" id="map1"></div>
 
     <div class="dropdown" id="dropdown2">
+        <label for="variable-dropdown-2">Choropleth Map Attribute 2:</label>
         <select id="variable-dropdown-2">
             <option value="defaultValue">Select an Attribute</option>
             <option value="povertyPercentage">Poverty Percentage</option>
@@ -58,6 +80,7 @@
     <div class="viz" id="map2"></div>
 
     <div class="dropdown" id="dropdown3">
+        <label for="variable-dropdown-3">Histogram Attribute:</label>
         <select id="variable-dropdown-3">
             <option value="defaultValue">Select an Attribute</option>
             <option value="povertyPercentage">Poverty Percentage</option>
@@ -78,10 +101,11 @@
             <option value="percentHighCholesterol">Percent High Cholesterol</option>
         </select>
     </div>
-
+    
     <div class="viz" id="histogram-container"></div>
 
     <div class="dropdown" id="x-attribute-dropdown">
+        <label for="variable-dropdown-4">Scatter Plot X Attribute:</label>
         <select id="variable-dropdown-4">
             <option value="defaultValue">Select an X Axis</option>
             <option value="povertyPercentage">Poverty Percentage</option>
@@ -104,6 +128,7 @@
     </div>
 
     <div class="dropdown" id="y-attribute-dropdown">
+        <label for="variable-dropdown-5">Scatter Plot Y Attribute:</label>
         <select id="variable-dropdown-5">
             <option value="defaultValue">Select an Y Axis</option>
             <option value="povertyPercentage">Poverty Percentage</option>
@@ -141,5 +166,19 @@
     <!-- <script src="js/topojson.v3.js"></script> -->
     <script src="js/choroplethMap.js"></script>
     <script type="module" src="js/main.js"></script>
+    <!-- Script for modal functionality -->
+    <script>
+        // Function to open the modal
+        function openModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
 </body>
 </html>

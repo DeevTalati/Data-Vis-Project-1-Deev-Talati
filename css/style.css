@@ -73,17 +73,23 @@
 }
 
 .viz-container {
-    /* Add display flex to align items horizontally */
     display: flex;
-    /* Add padding to the right of the scatter plot */
-    padding-right: 200px; /* Adjust as needed */
-    /* Ensure proper positioning of the legend */
-    position: relative;
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align items to the top */
+    border: 3px solid #ccc; /* Add border style */
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px; /* Add padding */
+    margin-top: 20px; /* Add margin to separate from header */
 }
 
 .viz {
-    /* Remove padding-right to avoid extra space */
-    padding-right: 0;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Align items to the top */
+    border: 3px solid #ccc; /* Add border style */
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px; /* Add padding */
+    margin-top: 20px; /* Add margin to separate from header */
 }
 
 .legend-title {
@@ -101,4 +107,78 @@
     margin-right: 10px;
 }
 
-/* Add any additional styles as needed */
+/* CSS styles for labels */
+label {
+    margin-bottom: 10px;
+}
+
+/* Center the dropdowns */
+.dropdown {
+    text-align: center; /* Center text */
+    margin-bottom: 10px; /* Add margin to separate dropdowns */
+    margin-top: 10px; /* Add margin to separate dropdowns */
+}
+
+/* Styles for the information button */
+.info-button {
+    position: fixed; /* Fixed position */
+    top: 20px; /* Distance from the top */
+    right: 20px; /* Distance from the right */
+    z-index: 1000; /* Ensure it's above other content */
+    background-color: rgba(255, 255, 255, 0.8); /* Background color */
+    border: 3px solid #ccc; /* Border */
+    border-radius: 50%; /* Rounded shape */
+    width: 40px; /* Button width */
+    height: 40px; /* Button height */
+    display: flex; /* Flex display for centering content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    cursor: pointer; /* Cursor style */
+}
+
+.info-button i {
+    color: #333; /* Icon color */
+    font-size: 24px; /* Icon size */
+}
+
+/* Styles for the modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1001; /* Sit on top of the button */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+    padding-top: 60px; /* Location of the modal content */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px; /* Rounded corners */
+    width: 60%; /* Could be more or less, depending on screen size */
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center; /* Center the text */
+}

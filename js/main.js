@@ -1,5 +1,6 @@
 import { Histogram } from './histogram.js';
 import { ScatterPlot } from './scatterPlot.js';
+
 Promise.all([
   d3.json('data/counties-10m.json'),
   d3.csv('data/national_health_data.csv') // Updated CSV file name
