@@ -79,9 +79,9 @@ class Histogram {
         // Calculate histogram bins
         const bins = d3.histogram()
             .domain(vis.xScale.domain())
-            .thresholds(vis.xScale.ticks(10))
+            .thresholds(vis.xScale.ticks(30))
             (validData);
-        
+    
         // Update the yScale domain to represent the frequency
         vis.yScale.domain([0, d3.max(bins, d => d.length)]);
     
@@ -137,15 +137,27 @@ class Histogram {
             .attr('y', d => vis.yScale(d.length))
             .attr('width', d => Math.max(vis.xScale(d.x1) - vis.xScale(d.x0) - 1, 0)) // Ensure width is non-negative
             .attr('height', d => vis.height - vis.yScale(d.length))
-            .style('fill', '#69b3a2'); // Add color to bars, you can change the color as needed
-    
-        // Function to capitalize the first letter of each word
+            .style('fill', '#69b3a2') // Add color to bars, you can change the color as needed
+            .on('mousemove', function(d) {
+                const tooltipText = `Range: ${d.x0.toFixed(2)} - ${d.x1.toFixed(2)}\nFrequency: ${d.length}`;
+                // Show tooltip on mousemove
+                d3.select('#tooltip')
+                    .style('display', 'block')
+                    .style('left', (d3.event.pageX + 10) + 'px')
+                    .style('top', (d3.event.pageY + 10) + 'px')
+                    .html(tooltipText);
+            })
+            .on('mouseleave', function() {
+                // Hide tooltip on mouseleave
+                d3.select('#tooltip').style('display', 'none');
+            });
+                // Function to capitalize the first letter of each word
         function capitalizeFirstLetter(string) {
             return string.replace(/\b\w/g, function (char) {
                 return char.toUpperCase();
             });
         }
-    
+        
         // Add x-axis title representing the selected property
         vis.svg.append('text')
             .attr('class', 'x-axis-title')
@@ -163,16 +175,17 @@ class Histogram {
             .style('text-anchor', 'middle')
             .text('Frequency'); // Use 'Frequency' as the y-axis title
     
-        // Add data marks above bars representing the frequency
+        // Add data marks above bars representing the frequency, only if the frequency is 9 or below
         vis.svg.selectAll('.data-mark')
             .data(bins)
             .enter().append('text')
+            .filter(d => d.length <= 3) // Filter out bins with frequency greater than 9
             .attr('class', 'data-mark')
             .attr('x', d => vis.xScale((d.x0 + d.x1) / 2))
             .attr('y', d => vis.yScale(d.length) - 5) // Adjust the position as needed
             .attr('text-anchor', 'middle')
-            .text(d => d.length); // Display the length of each bin (i.e., the frequency)
-    }
+            .text(d => d.length > 0 ? d.length : ''); // Display count only if greater than 0
+    }    
 }
 
 export { Histogram };
